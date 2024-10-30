@@ -23,7 +23,7 @@ export const login = async (req, res, next) => {
             
             const token = jwt.sign({id: validUser._id}, process.env.JWT_SECRET);
             
-            res.status(200).cookie('access_token', token, {httpOnly:true}).json({validUser});
+            res.status(200).cookie('access_token', token, {httpOnly:true}).json({validUser, token});
 
         } catch (error) {
             console.log(error)

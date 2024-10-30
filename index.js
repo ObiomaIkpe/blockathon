@@ -27,10 +27,12 @@ app.use((err, req, res, next) => {
     })
 })
 
+const port = process.env.port || 3000;
+
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI)
-        app.listen(3000, () => {
+        app.listen(`${port}`, () => {
             console.log(`hell from the server side`)
         });
     } catch (error) {
