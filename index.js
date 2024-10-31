@@ -17,6 +17,9 @@ import cookieParser from 'cookie-parser';
 io.on('connection', (socket) => {
   console.log("a user connected");  
   
+  socket.on('draw', (draw) => {
+    io.emit('draw', draw);
+  });
 })
 
 
