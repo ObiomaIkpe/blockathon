@@ -6,20 +6,22 @@ export const createCanvas = async (req, res, next) => {
     const token = req.cookies.access_token;
 
     if(!token){
-        return next(error);
+        return next(errorHandler(401, 'unauthorized'));
     }
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if(err){
             return next(errorHandler(401, 'unauthorized access!'))
         }
+
+        req.user = user;
     })
 
     const tokenID = token._id;
 
-    const {canvasName, canvasDescription} = req.body;
+    const {canvasCode, NFTName, NFTDescription} = req.body;
     
-    if (canvasName === '' || !canvasName){
+    if (canvasName === '' || !canvasName ){
         return next(errorHandler(401, 'canvas must have a name'))
     }
 

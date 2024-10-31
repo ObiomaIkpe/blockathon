@@ -1,13 +1,24 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './connectDB.js';
-import router from './routes/routes.js'
+import router from './routes/routes.js';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 
+const corsOptions = {
+    origin: '*',
+}
+
+app.use(cors());
+app.use(cookieParser());
+
 const app = express();
 app.use(express.json());
+
+
 
 app.get('/', (req, res) => {
     res.send('hell from the server side!');
