@@ -4,6 +4,7 @@ import connectDB from './connectDB.js';
 import router from './routes/routes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+// import socketListener from './socket.js';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.use(router);
+// app.use('/canvas', socketListener);
 
 
 app.use((err, req, res, next) => {
