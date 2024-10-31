@@ -37,22 +37,22 @@
 import express from 'express';
 import {Server} from 'socket.io';
 import {createServer} from 'node:http';
-import { Socket } from 'node:dgram';
+// import { Socket } from 'node:dgram';
 
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-export const ios = io.on('connection', (socket) => {
-  console.log("a user connected")
-  
+io.on('connection', (socket) => {
+  console.log("a user connected");  
   socket.on('draw', (draw) => {
+   console.log('msg')
     io.emit('draw', draw)
   })
 })
 
-ios();
+
 // export default socketListener;
 
 

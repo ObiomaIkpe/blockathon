@@ -1,10 +1,24 @@
 import express from 'express';
+import { createServer} from 'node:http';
+
+const app = express();
+
+import {Server} from 'socket.io';
+const server = createServer(app);
+const io = new Server(server);
+
 import dotenv from 'dotenv';
 import connectDB from './connectDB.js';
 import router from './routes/routes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-// import socketListener from './socket.js';
+
+
+io.on('connection', (socket) => {
+  console.log("a user connected");  
+  
+})
+
 
 dotenv.config();
 
@@ -14,7 +28,6 @@ const corsOptions = {
 }
 
 
-const app = express();
 app.use(express.json());
 
 app.use(cookieParser());
