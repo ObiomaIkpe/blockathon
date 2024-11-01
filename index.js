@@ -8,11 +8,13 @@ import {Server} from 'socket.io';
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "*", // Allow any URL
+        origin: "localhost:5173", // Allow any URL
         methods: ["GET", "POST"],
         credentials: true
     }
 });
+
+app.use(cors());
 
 import dotenv from 'dotenv';
 import connectDB from './connectDB.js';
