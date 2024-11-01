@@ -32,6 +32,25 @@ io.on('connection', (socket) => {
     callback(data)
     // socket.emit('drawResponse', data)
     })
+
+    // broadcast  drawing start to other clients
+    socket.on('startDraw', (data) => {
+        socket.broadcast.emit('startDraw', data);
+    });
+
+    // Broadcast drawing in progress to other clients
+    socket.on('draw', (data) => {
+        socket.broadcast.emit('draw', data);
+    });
+
+    // Broadcast drawing end to other clients
+    socket.on('endDraw', () => {
+        socket.broadcast.emit('endDraw');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected:', socket.id);
+    });
   })
 
 
