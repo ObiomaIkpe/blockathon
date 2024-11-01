@@ -1,34 +1,39 @@
 import express from 'express';
 import { createServer} from 'node:http';
+import cors from 'cors';
 
 const app = express();
 
 import {Server} from 'socket.io';
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: '*',
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['my-custom-header'],
+        credentials: true
+    }
+});
 
 import dotenv from 'dotenv';
 import connectDB from './connectDB.js';
 import router from './routes/routes.js';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 
 io.on('connection', (socket) => {
   console.log("a user connected");  
   
-  socket.on('draw', (draw) => {
-    io.emit('draw', draw);
-  });
+//   socket.on('draw', (draw) => {
+//     io.emit('draw', draw);
+//   });
 })
 
 
 dotenv.config();
 
 
-const corsOptions = {
-    origin: '*',
-}
+
 
 
 app.use(express.json());
