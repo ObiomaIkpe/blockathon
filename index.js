@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
   console.log("a user connected"); 
 
   socket.on('draw', (data) => {
-    console.log(data)
+    console.log('sdfdf',data)
   })
 
 //   socket.on("connect_error", (err) => {
