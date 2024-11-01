@@ -29,18 +29,14 @@ io.on('connection', (socket) => {
 
   socket.on('draw', (data) => {
     console.log(data)
-    io.emit('message', `${data}`)
   })
 
-  socket.on("connect_error", (err) => {
+//   socket.on("connect_error", (err) => {
     
-  console.log(`connect_error due to ${err.message}`);
+//   console.log(`connect_error due to ${err.message}`);
 }); 
   
-//   socket.on('draw', (draw) => {
-//     io.emit('draw', draw);
-//   });
-})
+
 
 
 dotenv.config();
