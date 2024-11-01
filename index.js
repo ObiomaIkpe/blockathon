@@ -8,9 +8,8 @@ import {Server} from 'socket.io';
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: '*',
-        methods: ['GET', 'POST'],
-        allowedHeaders: ['my-custom-header'],
+        origin: "*", // Allow any URL
+        methods: ["GET", "POST"],
         credentials: true
     }
 });
