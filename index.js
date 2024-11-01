@@ -27,7 +27,7 @@ app.use(cors())
 io.on('connection', (socket) => {
   console.log("a user connected"); 
 
-  socket.on('message', (data) => {
+  socket.on('draw', (data) => {
     console.log(data)
     io.emit('message', `${data}`)
   })
