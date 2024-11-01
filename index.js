@@ -27,16 +27,13 @@ app.use(cors())
 io.on('connection', (socket) => {
   console.log("a user connected"); 
 
-  socket.on('draw', (data) => {
-    socket.emit(data)
+  socket.on('draw', (data, callback) => {
+
+    callback(data)
+    // socket.emit('drawResponse', data)
     })
   })
 
-//   socket.on("connect_error", (err) => {
-    
-//   console.log(`connect_error due to ${err.message}`);
-}); 
-  
 
 
 
