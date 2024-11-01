@@ -1,29 +1,41 @@
 import express from 'express';
 import { createServer} from 'node:http';
+import {Server} from 'socket.io';
 import cors from 'cors';
 
 const app = express();
 
-import {Server} from 'socket.io';
 const server = createServer(app);
+
 const io = new Server(server, {
     cors: {
-        origin: "localhost:5173", // Allow any URL
+        origin: "*", // Allow any URL
         methods: ["GET", "POST"],
-        credentials: true
     }
 });
 
-app.use(cors());
 
 import dotenv from 'dotenv';
 import connectDB from './connectDB.js';
 import router from './routes/routes.js';
 import cookieParser from 'cookie-parser';
 
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors())
 
 io.on('connection', (socket) => {
-  console.log("a user connected");  
+  console.log("a user connected"); 
+
+  socket.on('message', (data) => {
+    console.log(data)
+    io.emit('message', `${data}`)
+  })
+
+  socket.on("connect_error", (err) => {
+    
+  console.log(`connect_error due to ${err.message}`);
+}); 
   
 //   socket.on('draw', (draw) => {
 //     io.emit('draw', draw);
@@ -37,10 +49,6 @@ dotenv.config();
 
 
 
-app.use(express.json());
-
-app.use(cookieParser());
-app.use(cors());
 
 
 app.get('/', (req, res) => {
@@ -67,7 +75,7 @@ const port = process.env.port || 3000;
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI)
-        app.listen(`${port}`, () => {
+        server.listen(`${port}`, () => {
             console.log(`hell from the server side`)
         });
     } catch (error) {
