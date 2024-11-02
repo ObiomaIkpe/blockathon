@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer} from 'node:http';
 import {Server} from 'socket.io';
 import cors from 'cors';
-const {userJoin, getUsers, userLeave}  = require("./utils/user")
+import {userJoin, getUsers, userLeave}  from "./utils/user.js"
 
 const app = express();
 
