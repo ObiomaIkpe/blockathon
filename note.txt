@@ -1,0 +1,18 @@
+saveBase64ImageToDB(returned data from emitted socket event at client to server).then(() => {
+    res.status(200).send('saving image to database').catch(err => res.status(500).send('error': err.message))
+});
+
+const saveBase64ImageToDB = async (base64 image from frontend) => {
+    const imageRecord = new ImageModel({image: base64Image});
+    await image.save();
+}
+
+
+// retrieving the data from the backend and sending to the frontend.
+app.get('/image/:id'. async (req, res) => {
+    const image = await ImageModel.findById(req.params.id);
+
+    if there is no image, run an error middleware here.
+
+    res.json({image: `data:image/png;base64,${iamge.url}})
+})

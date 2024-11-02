@@ -23,6 +23,7 @@ import cookieParser from 'cookie-parser';
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors())
+dotenv.config();
 
 io.on('connection', (socket) => {
   console.log("a user connected"); 
@@ -34,10 +35,20 @@ io.on('connection', (socket) => {
     })
   })
 
+  const 
+
+
+//   io.on('connection', (socket) => {
+//     console.log("a user connected"); 
+  
+//     socket.on('draw', (data) => {
+//       socket.emit(data)
+//       })
+  
+//     })
 
 
 
-dotenv.config();
 
 
 
