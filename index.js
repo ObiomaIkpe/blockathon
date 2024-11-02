@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer} from 'node:http';
 import {Server} from 'socket.io';
 import cors from 'cors';
+const {userJoin, getUsers, userLeave}  = require("./utils/user")
 
 const app = express();
 
@@ -24,6 +25,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors())
 
+
+let imageUrl, userResponse;
+
 io.on('connection', (socket) => {
   console.log("a user connected"); 
 
@@ -32,6 +36,35 @@ io.on('connection', (socket) => {
     callback(data)
     // socket.emit('drawResponse', data)
     })
+
+    socket.on("user-joined", (data) => {
+        const {roomId, userId, userName, host, presenter} = data;
+        userRoom = roomId;
+        const user = userJoin(socket.id, userName, roomId, host, presenter);
+        const roomUser = getUsers(user.room);
+        socket.join(user.room);
+        socket.emit("message", {
+            message: "Welcome to ChatRoom"
+        });
+        socket.broadcast.to(user.room).emit("message", {
+            message: `${user,username} has joined`
+        });
+
+        io.to(user.room).emit("users", roomUsers);
+        io.to(user.room).emit("canvasImage",imageUrl);
+    });
+
+    socket.on("disconnect", ()=>{
+        const userLeaves = userLeave(socket.id);
+        const roomUsers = getUsers(userRoom);
+
+        if (userLeaves){
+            io.to(userLeaves.room).emit("message", {
+                message: `${userLeaves.username} left the chat`,
+            });
+            io.to(userLeaves.room).emit("users", roomUsers);
+        }
+    });
 
     // broadcast  drawing start to other clients
     socket.on('startDraw', (data) => {
@@ -52,8 +85,6 @@ io.on('connection', (socket) => {
         console.log('A user disconnected:', socket.id);
     });
   })
-
-
 
 
 dotenv.config();
