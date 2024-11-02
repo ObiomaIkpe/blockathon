@@ -36,34 +36,8 @@ io.on('connection', (socket) => {
 
     callback(data)
     // socket.emit('drawResponse', data)
-    })
 
-<<<<<<< HEAD
-  const 
-
-
-//   io.on('connection', (socket) => {
-//     console.log("a user connected"); 
-  
-//     socket.on('draw', (data) => {
-//       socket.emit(data)
-//       })
-  
-//     })
-=======
-    socket.on("user-joined", (data) => {
-        const {roomId, userId, userName, host, presenter} = data;
-        userRoom = roomId;
-        const user = userJoin(socket.id, userName, roomId, host, presenter);
-        const roomUser = getUsers(user.room);
-        socket.join(user.room);
-        socket.emit("message", {
-            message: "Welcome to ChatRoom"
-        });
-        socket.broadcast.to(user.room).emit("message", {
-            message: `${user,username} has joined`
-        });
->>>>>>> 82b1200cbcf2089789d61a9fd304da14a12dfb9a
+    
 
         io.to(user.room).emit("users", roomUsers);
         io.to(user.room).emit("canvasImage",imageUrl);
@@ -100,13 +74,6 @@ io.on('connection', (socket) => {
         console.log('A user disconnected:', socket.id);
     });
   })
-
-
-
-
-
-
-
 
 
 app.get('/', (req, res) => {
